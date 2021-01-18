@@ -106,3 +106,13 @@ complete -F __start_kubectl k
 
 # Misc
 alias bastion='k exec -n bastion -it shell-demo -- /bin/bash'
+
+# Tmux as default
+if [ ! "$TMUX" ]; then
+ tmux attach
+fi
+
+if [ "$TMUX" ]; then
+# export TERM=screen
+ export TERM=xterm
+fi
