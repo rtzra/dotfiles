@@ -104,7 +104,7 @@ source <(kubectl completion zsh)
 alias k=kubectl
 complete -F __start_kubectl k
 
-# Misc
+# Alias for host 'bastion' in k8s
 alias bastion='k exec -n bastion -it shell-demo -- /bin/bash'
 
 # Tmux as default
@@ -116,3 +116,8 @@ if [ "$TMUX" ]; then
 # export TERM=screen
  export TERM=xterm
 fi
+
+# Fix MobaXterm Home/End key with ZSH
+# also you need MANUAL set Terminal settings / Terminal type to 'linux' or 'putty'
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
