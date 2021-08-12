@@ -104,7 +104,7 @@ alias k=kubectl
 complete -F __start_kubectl k
 
 # Alias for host 'bastion' in k8s
-alias bastion='k exec -n bastion -it shell-demo -- /bin/bash'
+alias bastion='k exec -n services -it zsh-utils -- /bin/zsh'
 
 # Tmux as default
 if [ ! "$TMUX" ]; then
