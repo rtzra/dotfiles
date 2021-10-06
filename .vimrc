@@ -24,7 +24,7 @@ filetype indent on
 
 " Theme
 syntax enable
-colorscheme torte
+colorscheme peachpuff
 
 " Title as edites filename
 set titlestring=%t
