@@ -1,4 +1,4 @@
-rtzra public repository
+rtzra public repository with dotfiles
 ====
 
 Some config files
