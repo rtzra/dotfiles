@@ -78,7 +78,7 @@ DISABLE_UPDATE_PROMPT="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, a lugins slow down shell startup.
-plugins=(ansible colorize docker encode64 git git-prompt helm kubectl kubectx tmux zsh-autosuggestions fast-syntax-highlighting)
+plugins=(ansible colorize docker encode64 git git-prompt fzf helm kube-ps1 kubectl kubectx tmux zsh-autosuggestions fast-syntax-highlighting colored-man-pages thefuck)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -113,19 +113,59 @@ bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+#---------------
+# Autocompletions
 
 # kubectl
 source <(kubectl completion zsh)
-
 alias k=kubectl
 complete -F __start_kubectl k
+
+# kube-ps1
+KUBE_PS1_PREFIX="["
+KUBE_PS1_SUFFIX="]"
+PROMPT=$PROMPT'$(kube_ps1) '
 
 # krew for kubectl
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # helm
 source <(helm completion zsh)
+
+# velero
+source <(velero completion zsh)
+alias v=velero
+complete -F __start_velero v
+
+#---------------
+# Aliases
+
+# Bastion
+alias bastion='k exec -n services -it bastion-utils -- /usr/bin/zsh'
+
+# gitlab.x5.ru
+alias gitlab='ssh user@gitlab.my.ru'
+
+# jenkins.x5.ru
+alias jenkins='ssh user@jenkins.my.ru'
+
+# Winbox
+alias winbox64='wine /bin/winbox64.exe'
+alias winbox='wine /bin/winbox.exe'
+
+# Exa - replacing for default ls util
+alias ls='exa --icons --group-directories-first'
+alias ll='exa --icons --group-directories-first -l'
+alias grep='grep --color'
+
+# The fuck
+alias агсл=fuck
+alias бля=fuck
+
+# fzf plugin for zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Tmux as default
 if [ ! "$TMUX" ]; then
