@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -53,8 +46,9 @@ DISABLE_UPDATE_PROMPT="true"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
-# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -77,8 +71,9 @@ DISABLE_UPDATE_PROMPT="true"
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, a lugins slow down shell startup.
-plugins=(ansible colorize docker encode64 git git-prompt fzf helm kube-ps1 kubectl kubectx tmux zsh-autosuggestions fast-syntax-highlighting colored-man-pages thefuck)
+# Add wisely, as too many plugins slow down shell startup.
+#plugins=(git docker kubectl helm zsh-autosuggestions fast-syntax-highlighting tmux)
+plugins=(ansible colorize docker encode64 git git-prompt helm kubectl kubectx minikube tmux zsh-autosuggestions fast-syntax-highlighting zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -108,64 +103,18 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Fix MobaXterm Home/End key with ZSH
-bindkey '^[[H' beginning-of-line
-bindkey '^[[F' end-of-line
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-#---------------
-# Autocompletions
-
 # kubectl
 source <(kubectl completion zsh)
+
 alias k=kubectl
 complete -F __start_kubectl k
 
-# kube-ps1
-KUBE_PS1_PREFIX="["
-KUBE_PS1_SUFFIX="]"
-PROMPT=$PROMPT'$(kube_ps1) '
+# kubectl prompt
+#source ~/.oh-my-zsh/plugins/kube-ps1/kube-ps1.plugin.zsh
+#PROMPT='$(kube_ps1)'$PROMPT
 
-# krew for kubectl
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-# helm
+# Helm
 source <(helm completion zsh)
-
-# velero
-source <(velero completion zsh)
-alias v=velero
-complete -F __start_velero v
-
-#---------------
-# Aliases
-
-# Bastion
-alias bastion='k exec -n services -it bastion-utils -- /usr/bin/zsh'
-
-# gitlab.x5.ru
-alias gitlab='ssh user@gitlab.my.ru'
-
-# jenkins.x5.ru
-alias jenkins='ssh user@jenkins.my.ru'
-
-# Winbox
-alias winbox64='wine /bin/winbox64.exe'
-alias winbox='wine /bin/winbox.exe'
-
-# Exa - replacing for default ls util
-alias ls='exa --icons --group-directories-first'
-alias ll='exa --icons --group-directories-first -l'
-alias grep='grep --color'
-
-# The fuck
-alias агсл=fuck
-alias бля=fuck
-
-# fzf plugin for zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Tmux as default
 if [ ! "$TMUX" ]; then
@@ -176,3 +125,7 @@ if [ "$TMUX" ]; then
 # export TERM=screen
  export TERM=xterm
 fi
+
+# Vault
+export VAULT_ADDR=http://vault.local.rtzra.ru:8200
+
