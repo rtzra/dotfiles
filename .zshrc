@@ -118,12 +118,13 @@ source <(helm completion zsh)
 
 # Tmux as default
 if [ ! "$TMUX" ]; then
- tmux attach
+ export TERM=xterm
+ tmux
 fi
 
 if [ "$TMUX" ]; then
-# export TERM=screen
  export TERM=xterm
+ tmux attach
 fi
 
 # Vault
