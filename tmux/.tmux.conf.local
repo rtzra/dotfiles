@@ -352,6 +352,10 @@ setw -g pane-base-index 1
 # move status line to top
 #set -g status-position top
 
+# synchronize panes settings
+# send keyboard input to all visible panes
+# if use `bind -n` so bind key isn't needed
+bind C-a setw synchronize-panes ; display "Sync #{?pane_synchronized,ON,OFF}"
 
 # -- tpm -----------------------------------------------------------------------
 
@@ -383,7 +387,8 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @continuum-restore 'on'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'christoomey/vim-tmux-navigator'
-set -g @plugin 'tmux-plugins/tmux-yank'
+#set -g @plugin 'tmux-plugins/tmux-yank'
+#set -g @plugin "nordtheme/tmux"
 
 # -- custom variables ----------------------------------------------------------
 
