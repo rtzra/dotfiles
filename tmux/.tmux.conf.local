@@ -13,7 +13,6 @@
 #   - and iTerm2 is configured to send [1;9A -> [1;9D for option + arrow keys
 # then uncomment the following line to make Meta + arrow keys mapping work
 #set -ga terminal-overrides "*:kUP3=\e[1;9A,*:kDN3=\e[1;9B,*:kRIT3=\e[1;9C,*:kLFT3=\e[1;9D"
-#set-option -sa terminal-overrides ",xterm*:Tc"
 
 # -- windows & pane creation ---------------------------------------------------
 
@@ -355,7 +354,24 @@ setw -g pane-base-index 1
 # synchronize panes settings
 # send keyboard input to all visible panes
 # if use `bind -n` so bind key isn't needed
-bind C-a setw synchronize-panes ; display "Sync #{?pane_synchronized,ON,OFF}"
+unbind C-a
+#bind C-a setw synchronize-panes ; display "Sync #{?pane_synchronized,ON,OFF}"
+bind C-a setw synchronize-panes
+
+# Reload this conf file with Ctrl+I
+#unbind C-i
+#bind C-i source-file ~/.tmux.conf
+
+# Move panes options
+set-option -g default-terminal "screen"
+set -g terminal-overrides "xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@:XT:Ms=\E]52;%p1%s;%p2%s\007:Cc=\E]12;%p1%s\007:Cr=\E]112\007:Cs=\E[%p1%d q:Csr=\E[2 q,screen*:XT,*256col*:colors=256"
+set-option -gw xterm-keys on
+# Switch panes
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+# Move panes left/right
+bind-key -n C-S-Left swap-window -t -1
+bind-key -n C-S-Right swap-window -t +1
 
 # -- tpm -----------------------------------------------------------------------
 
@@ -381,14 +397,12 @@ tmux_conf_update_plugins_on_reload=true
 
 # to enable a plugin, use the 'set -g @plugin' syntax:
 # visit https://github.com/tmux-plugins for available plugins
-set -g @plugin 'tmux-plugins/tmux-copycat'
+#set -g @plugin 'tmux-plugins/tmux-copycat'
+#set -g @plugin 'tmux-plugins/tmux-cpu'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @continuum-restore 'on'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'christoomey/vim-tmux-navigator'
-#set -g @plugin 'tmux-plugins/tmux-yank'
-#set -g @plugin "nordtheme/tmux"
+
 
 # -- custom variables ----------------------------------------------------------
 

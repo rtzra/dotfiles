@@ -9,7 +9,7 @@ Plug 'KeitaNakamura/neodark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+"Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 Plug 'honza/vim-snippets'
 Plug 'ryanoasis/vim-devicons'
 Plug 'Yggdroot/indentLine'
@@ -47,7 +47,7 @@ filetype indent on
 
 " Theme
 syntax enable
-colorscheme peachpuff
+colorscheme delek "peachpuff
 
 " Title as edites filename
 set titlestring=%t

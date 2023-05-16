@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/fireball/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -24,14 +24,14 @@ ZSH_THEME="agnoster"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+zstyle ':omz:update' mode auto
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -72,8 +72,7 @@ DISABLE_UPDATE_PROMPT="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-#plugins=(git docker kubectl helm zsh-autosuggestions fast-syntax-highlighting tmux)
-plugins=(ansible colorize docker encode64 git git-prompt helm kubectl kubectx minikube tmux zsh-autosuggestions fast-syntax-highlighting zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions fast-syntax-highlighting ansible colorize encode64 tmux colored-man-pages python pip pyenv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -103,30 +102,62 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# kubectl
-source <(kubectl completion zsh)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-alias k=kubectl
-complete -F __start_kubectl k
+fpath=(~/.zfunc $fpath)
 
-# kubectl prompt
-#source ~/.oh-my-zsh/plugins/kube-ps1/kube-ps1.plugin.zsh
-#PROMPT='$(kube_ps1)'$PROMPT
+# Full username length for 'w' command
+export PROCPS_USERLEN=20
 
-# Helm
-source <(helm completion zsh)
+# Aliases
+# git
+alias gp="git pull"
+alias gf="git fetch"
+alias gs="git status"
+alias gadd="git add ."
+alias gd="git diff"
+alias gbr="git branch -r"
+alias gbd="git branch --delete $1"
+alias gsm="git switch master"
+alias glf="git log -p -- $1"
+alias gch="git checkout $1"
+# Exa (replacing for default 'ls' command)
+alias ll='exa --icons --group-directories-first -l'
+alias grep='grep --color'
+# bat (replacing for default 'cat' command)
+alias cat="bat"
+export BAT_THEME="Dracula"
+source ~/.zfunc/bat.zsh
 
-# Tmux as default
-if [ ! "$TMUX" ]; then
- export TERM=xterm
- tmux
+# Proxy settings
+#http_proxy=http://127.0.0.1:3128
+#https_proxy=http://127.0.0.1:3128
+#ftp_proxy=http://127.0.0.1:3128
+#HTTP_PROXY=http://127.0.0.1:3128
+#HTTPS_PROXY=http://127.0.0.1:3128
+#PIP_PROXY=http://127.0.0.1:3128
+#no_proxy="localhost, 127.0.0.*, 10.*, 192.168.*"
+
+# Tmux settings
+export TERM=xterm
+session_name="TMUX"
+tmux has-session -t=$session_name 2> /dev/null
+if [[ $? -ne 0 ]]; then
+  TMUX='' tmux new-session -d -s "$session_name"
+fi
+if [[ -z "$TMUX" ]]; then
+  tmux attach -t "$session_name"
+else
+  tmux switch-client -t "$session_name"
 fi
 
-if [ "$TMUX" ]; then
- export TERM=xterm
- tmux attach
-fi
+# Token for Hashicorp Vault
+vt () {
+export VAULT_TOKEN=$1
+}
 
-# Vault
-export VAULT_ADDR=http://vault.local.rtzra.ru:8200
+# Autocompletion
+# for yq:
+source <(yq shell-completion zsh)
 
+# User specific aliases and functions
