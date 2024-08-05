@@ -1,4 +1,5 @@
-#256 colors in putty, tmux/screen and vim
+# 256 colors in putty, tmux/screen and vim
+
 There is a [detailed answer](http://stackoverflow.com/a/15378816/390643) on stackoverflow. If you are looking for a short one, here it is.
 
 - putty

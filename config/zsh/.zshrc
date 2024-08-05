@@ -1,14 +1,15 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
+# Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
+# load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
+#ZSH_THEME="ys"
 ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
@@ -28,10 +29,11 @@ ZSH_THEME="agnoster"
 # zstyle ':omz:update' mode disabled  # disable automatic updates
 # zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-zstyle ':omz:update' mode auto
+zstyle ':omz:update' mode auto      # update automatically without asking
 
 # Uncomment the following line to change how often to auto-update (in days).
 # zstyle ':omz:update' frequency 13
+zstyle ':omz:update' frequency 7
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -63,6 +65,21 @@ zstyle ':omz:update' mode auto
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="dd-mm-yyyy"
+HISTSIZE=10000000
+SAVEHIST=10000000
+HISTORY_IGNORE="(ls|cd|pwd|exit)*"
+setopt EXTENDED_HISTORY      # History file format ':start:elapsed;command'
+setopt INC_APPEND_HISTORY    # Write history immediately, do not wait close shell
+setopt SHARE_HISTORY         # Share history for all sessions
+setopt HIST_IGNORE_DUPS      # Ignore duplicated messages
+setopt HIST_IGNORE_ALL_DUPS  # Ignore all duplicates
+setopt HIST_IGNORE_SPACE     # Не делать записи о командах, начинающихся с пробела.
+setopt HIST_SAVE_NO_DUPS     # Do not write duplicate to file
+setopt HIST_VERIFY           # Перед выполнением команд показывать записи о них из истории команд.
+setopt APPEND_HISTORY        # Append history
+setopt HIST_NO_STORE         # Не хранить записи о командах history.
+setopt HIST_REDUCE_BLANKS    # Reeduce blanks (spaces)
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -72,7 +89,8 @@ zstyle ':omz:update' mode auto
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions fast-syntax-highlighting ansible colorize encode64 tmux colored-man-pages python pip pyenv)
+#plugins=(git)
+plugins=(fzf-tab zsh-autosuggestions fast-syntax-highlighting git ansible colorize colored-man-pages encode64 tmux sudo)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -89,27 +107,66 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
+export EDITOR='vim'
+export VISUAL='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# set PATH environment
+#export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
-fpath=(~/.zfunc $fpath)
-
-# Full username length for 'w' command
+# For full username length in 'w' command
 export PROCPS_USERLEN=20
 
-# Aliases
+# Proxy settings
+#export {http_proxy,https_proxy,ftp_proxy,all_proxy,HTTP_PROXY,HTTPS_PROXY,FTP_PROXY,ALL_PROXY}="http://127.0.0.1:3128/"
+#export {no_proxy,NO_PROXY}="localhost,127.0.0.1,::1,.local.mydomain.ru"
+
+# Terminal color palette
+export TERM=xterm-256color
+COLORTERM=truecolor
+
+# Tmux
+# -----
+session_name="fireball"
+# Check if a tmux session exists with a given name.
+tmux has-session -t=$session_name 2> /dev/null
+
+# Create the session if it doesn't exists.
+if [[ $? -ne 0 ]]; then
+  TMUX='' tmux new-session -d -s "$session_name"
+fi
+
+# Attach if outside of tmux, switch if you're in tmux.
+if [[ -z "$TMUX" ]]; then
+  tmux attach -t "$session_name"
+else
+  tmux switch-client -t "$session_name"
+fi
+# -----
+
+# fzf plugin
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Vault settings
+#export VAULT_ADDR="https://vault.mydomain.ru:8200"
+#export VAULT_CACERT=/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+
+# Aliases section
 # git
 alias gp="git pull"
 alias gf="git fetch"
@@ -121,43 +178,16 @@ alias gbd="git branch --delete $1"
 alias gsm="git switch master"
 alias glf="git log -p -- $1"
 alias gch="git checkout $1"
-# Exa (replacing for default 'ls' command)
-alias ll='exa --icons --group-directories-first -l'
+# grep
 alias grep='grep --color'
-# bat (replacing for default 'cat' command)
-alias cat="bat"
-export BAT_THEME="Dracula"
-source ~/.zfunc/bat.zsh
+# Exa - replacing for ls
+alias ll='eza --icons --group-directories-first -l'
+# Font test
+alias testfont='echo "\ue0b0 \u00b1 \ue0a0 \u27a6 \u2718 \u26a1 \u2699 \u2687"'
+# bat - replacing for cat
+alias cat="batcat"
+#export BAT_THEME="default"
+#source ~/.zfunc/bat.zsh
 
-# Proxy settings
-#http_proxy=http://127.0.0.1:3128
-#https_proxy=http://127.0.0.1:3128
-#ftp_proxy=http://127.0.0.1:3128
-#HTTP_PROXY=http://127.0.0.1:3128
-#HTTPS_PROXY=http://127.0.0.1:3128
-#PIP_PROXY=http://127.0.0.1:3128
-#no_proxy="localhost, 127.0.0.*, 10.*, 192.168.*"
-
-# Tmux settings
-export TERM=xterm
-session_name="TMUX"
-tmux has-session -t=$session_name 2> /dev/null
-if [[ $? -ne 0 ]]; then
-  TMUX='' tmux new-session -d -s "$session_name"
-fi
-if [[ -z "$TMUX" ]]; then
-  tmux attach -t "$session_name"
-else
-  tmux switch-client -t "$session_name"
-fi
-
-# Token for Hashicorp Vault
-vt () {
-export VAULT_TOKEN=$1
-}
-
-# Autocompletion
-# for yq:
-source <(yq shell-completion zsh)
-
-# User specific aliases and functions
+# Brew package manager
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

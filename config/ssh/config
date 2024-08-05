@@ -1,4 +1,19 @@
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa_github_com
+  IdentitiesOnly yes
+
+Host myhost.ru
+  HostName myhost.ru
+  User rtzra
+
+Host myhost1.ru
+  HostName myhost1.ru
+  User rtzra
+
 Host *
+  User rtzra
   ControlMaster auto
   ControlPath ~/.ssh/master-%r@%h:%p.socket
   ControlPersist 30m
@@ -14,14 +29,3 @@ Host *
   HashKnownHosts no
   StrictHostKeyChecking no
   UserKnownHostsFile ~/.ssh/known_hosts
-Host github.com
-  HostName github.com
-  User git
-  IdentityFile ~/.ssh/id_rsa_github_com
-  IdentitiesOnly yes
-Host myhost.ru
-  HostName myhost.ru
-  User rtzra
-Host myhost1.ru
-  HostName myhost1.ru
-  User my_user

@@ -1,6 +1,6 @@
 # Tmux config file
 
-My own .tmux.conf.local config file for tmux.
+My own .tmux.conf config file for tmux.
 
 ## How to setup
 
@@ -21,41 +21,28 @@ apt install -y git
 Before cloning see Requirements (tmux, awk, sed and perl)
 
 ```
-git clone https://github.com/gpakosz/.tmux
+cd ~/
+git clone https://github.com/rtzra/dotfiles
 ```
 
 ### Copy config file
 
 ```
 $ cd
-$ git clone https://github.com/gpakosz/.tmux.git
-$ ln -s -f .tmux/.tmux.conf
-```
-You may copy default config:
-
-```
-$ cp .tmux/.tmux.conf.local .
+$ cp dotfiles/config/tmux/.tmux.conf .
 ```
 
 or get my:
 
 ```
-wget https://raw.githubusercontent.com/rtzra/public/tmux/master/.tmux.conf.local
+wget https://raw.githubusercontent.com/rtzra/dotfiles/master/config/tmux/.tmux.conf
 ```
 
-Difference:
+### Difference:
 
-```
-set-option -g prefix `
-bind-key a send-prefix
-set -g base-index 1
-set-option -g base-index 1
-setw -g pane-base-index 1
-```
+A lot of differences, look at .tmux.conf and comments
 
 Command prefix keybinding: `
-
-`a` for pressing `
 
 Index starting from 1 (0 for default)
 
@@ -64,15 +51,24 @@ Index starting from 1 (0 for default)
 Add to your .bashrc or .zshrc:
 
 ```
-# Tmux as default
-if [ ! "$TMUX" ]; then
- tmux attach
+# Tmux
+# -----
+session_name="rtzra"
+# Check if a tmux session exists with a given name.
+tmux has-session -t=$session_name 2> /dev/null
+
+# Create the session if it doesn't exists.
+if [[ $? -ne 0 ]]; then
+  TMUX='' tmux new-session -d -s "$session_name"
 fi
 
-if [ "$TMUX" ]; then
-# export TERM=screen
- export TERM=xterm
+# Attach if outside of tmux, switch if you're in tmux.
+if [[ -z "$TMUX" ]]; then
+  tmux attach -t "$session_name"
+else
+  tmux switch-client -t "$session_name"
 fi
+# -----
 ```
 
 ### Reload settings
@@ -94,3 +90,4 @@ Reload Tmux configuration:
 ```
 tmux source-file ~/.tmux.conf
 ```
+or press ` and then Ctrl+i
