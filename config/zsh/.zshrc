@@ -90,7 +90,7 @@ setopt HIST_REDUCE_BLANKS    # Reeduce blanks (spaces)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(git)
-plugins=(fzf-tab zsh-autosuggestions fast-syntax-highlighting git ansible colorize colored-man-pages encode64 tmux sudo)
+plugins=(fzf-tab zsh-autosuggestions fast-syntax-highlighting git ansible colorize colored-man-pages encode64 tmux sudo z)
 
 source $ZSH/oh-my-zsh.sh
 

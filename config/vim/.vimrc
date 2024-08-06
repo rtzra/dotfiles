@@ -19,7 +19,8 @@ Plug 'ryanoasis/vim-devicons'             " Icons
 Plug 'scrooloose/nerdtree'                " Nerd Tree like filemanager
 Plug 'preservim/nerdcommenter'            " Easy comments
 Plug 'airblade/vim-gitgutter'             " Shows git diff markers in the sign column and stages/previews/undoes hunks and partial hunks
-Plug 'tpope/vim-fugitive'                 " A Git wrapper
+Plug 'tpope/vim-fugitive'                 " Git wrapper
+Plug 'rbong/vim-flog'                     " Flog is a fast, beautiful, and powerful git branch viewer
 Plug 'psliwka/vim-smoothie'               " Smoothe scrolling
 Plug 'tpope/vim-surround'                 " Surround selected text with brackets, quotes, tags etc
 call plug#end()
@@ -103,3 +104,7 @@ imap <F5> <Esc>:set hlsearch!<CR>
 map <F5> <Esc>:set hlsearch!<CR>
 imap <F8> <Esc>:set cursorcolumn!<CR>
 map <F8> <Esc>:set cursorcolumn!<CR>
+
+" vim-powered terminal in split window, press \t for terminal and Ctrl+d to quit
+map <Leader>t :term ++close<cr>
+tmap <Leader>t <c-w>:term ++close<cr>
