@@ -1,8 +1,7 @@
 # Siberia - clean, simple and fast theme for Oh My Zsh https://ohmyz.sh/
 # https://github.com/rtzra/dotfiles
 #
-# For best experience usage:
-# - Use dark background in you favorite terminal
+# Recommends for best experience usage:
 # - Install zsh and git
 # - Install Oh My Zsh
 # - Copy theme to ~/.oh-my-zsh/themes
