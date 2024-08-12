@@ -29,10 +29,10 @@ call plug#end()
 let g:airline_powerline_fonts = 1     " Support for Powerline fonts
 let g:Powerline_symbols='unicode'     " Unicode support
 let g:airline_section_c = '%F'        " Format for section_c
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'default'
-"let g:airline_statusline_ontop=0       " Status line on top
-let g:airline_theme='base16'            " Airline color theme, look at https://github.com/vim-airline/vim-airline/wiki/Screenshots
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline_statusline_ontop=0
+"let g:airline_theme='deus'           " Theme
+"let g:airline#extensions#tabline#formatter = 'default'
 
 " NerdTree shortcut and settings
 nnoremap <leader>n :NERDTreeFocus<CR>

@@ -1,5 +1,6 @@
 # Siberia - clean, simple and fast theme for Oh My Zsh https://ohmyz.sh/
 # https://github.com/rtzra/dotfiles
+# Icons: https://www.nerdfonts.com/cheat-sheet
 #
 # Recommends for best experience usage:
 # - Install zsh and git
@@ -76,7 +77,8 @@ local exit_code="%(?,,C:%{$fg[red]%}%?%{$reset_color%})"
 # $
 # ---
 
-PROMPT="[%*] ${venv_info}\
+PROMPT="%{$FG[247]%}[%*]%{$reset_color%} \
+${venv_info}\
 %(#,%{$bg[yellow]%}%{$fg[black]%}%n%{$reset_color%},%{$fg[cyan]%}%n)\
 %{$reset_color%}@\
 %{$fg[green]%}%m \
