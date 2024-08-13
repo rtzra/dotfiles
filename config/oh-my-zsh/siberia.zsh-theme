@@ -68,13 +68,13 @@ local exit_code="%(?,,C:%{$fg[red]%}%?%{$reset_color%})"
 
 # Prompt format:
 #
-# [TIME] PRIVILEGES USER@MACHINE at DIRECTORY [git:BRANCH] git:STATE C:LAST_EXIT_CODE
+# [TIME] [VENV] PRIVILEGES USER@MACHINE in DIRECTORY [git:BRANCH] git:STATE C:LAST_EXIT_CODE
 # -> COMMAND
 #
 # For example:
 #
-# % ys @ ys-mbp in ~/.oh-my-zsh on git:master x [21:47:42] C:0
-# $
+# [21:11:34] [3.19] user@machine in ~/.oh-my-zsh on [git:master] x C:0
+# ->
 # ---
 
 PROMPT="%{$FG[247]%}[%*]%{$reset_color%} \
