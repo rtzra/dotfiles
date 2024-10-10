@@ -10,6 +10,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
 #ZSH_THEME="ys"
+#ZSH_THEME="agnoster"
 ZSH_THEME="siberia"
 
 # Set list of themes to pick from when loading at random
@@ -90,9 +91,18 @@ setopt HIST_REDUCE_BLANKS    # Reeduce blanks (spaces)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(git)
-plugins=(fzf-tab zsh-autosuggestions fast-syntax-highlighting git ansible colorize colored-man-pages encode64 tmux sudo z)
+plugins=(fzf-tab zsh-autosuggestions fast-syntax-highlighting git ansible colorize colored-man-pages encode64 tmux sudo z autoupdate)
 
 source $ZSH/oh-my-zsh.sh
+
+# settings for autoupdate plugin
+# to check for updates
+export UPDATE_ZSH_DAYS=7
+# export UPDATE_ZSH_DAYS=13
+ZSH_CUSTOM_AUTOUPDATE_QUIET=false
+# Values accepted (min: 1, max: 16)
+# Parallel downloads will not be enabled if value is out-of-range
+ZSH_CUSTOM_AUTOUPDATE_NUM_WORKERS=8
 
 # User configuration
 
