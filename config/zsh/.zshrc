@@ -9,8 +9,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
-#ZSH_THEME="ys"
-#ZSH_THEME="agnoster"
 ZSH_THEME="siberia"
 
 # Set list of themes to pick from when loading at random
@@ -75,11 +73,11 @@ setopt INC_APPEND_HISTORY    # Write history immediately, do not wait close shel
 setopt SHARE_HISTORY         # Share history for all sessions
 setopt HIST_IGNORE_DUPS      # Ignore duplicated messages
 setopt HIST_IGNORE_ALL_DUPS  # Ignore all duplicates
-setopt HIST_IGNORE_SPACE     # Не делать записи о командах, начинающихся с пробела.
+setopt HIST_IGNORE_SPACE     # Ignore command started from space ' '
 setopt HIST_SAVE_NO_DUPS     # Do not write duplicate to file
-setopt HIST_VERIFY           # Перед выполнением команд показывать записи о них из истории команд.
+setopt HIST_VERIFY           # Whenever the user enters a line with history expansion, don’t execute the line directly; instead, perform history expansion and reload the line into the editing buffer
 setopt APPEND_HISTORY        # Append history
-setopt HIST_NO_STORE         # Не хранить записи о командах history.
+setopt HIST_NO_STORE         # Do not store info anout history command
 setopt HIST_REDUCE_BLANKS    # Reeduce blanks (spaces)
 
 # Would you like to use another custom folder than $ZSH/custom?
@@ -90,7 +88,6 @@ setopt HIST_REDUCE_BLANKS    # Reeduce blanks (spaces)
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-#plugins=(git)
 plugins=(fzf-tab zsh-autosuggestions fast-syntax-highlighting git ansible colorize colored-man-pages encode64 tmux sudo z autoupdate)
 
 source $ZSH/oh-my-zsh.sh
@@ -143,61 +140,23 @@ export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export PROCPS_USERLEN=20
 
 # Proxy settings
-#export {http_proxy,https_proxy,ftp_proxy,all_proxy,HTTP_PROXY,HTTPS_PROXY,FTP_PROXY,ALL_PROXY}="http://127.0.0.1:3128/"
-#export {no_proxy,NO_PROXY}="localhost,127.0.0.1,::1,.local.mydomain.ru"
+[[ -f ~/.zsh/aliases.zsh ]] && source ~/.zsh/proxy.zsh
 
 # Terminal color palette
 export TERM=xterm-256color
 COLORTERM=truecolor
 
 # Tmux
-# -----
-session_name="fireball"
-# Check if a tmux session exists with a given name.
-tmux has-session -t=$session_name 2> /dev/null
-
-# Create the session if it doesn't exists.
-if [[ $? -ne 0 ]]; then
-  TMUX='' tmux new-session -d -s "$session_name"
-fi
-
-# Attach if outside of tmux, switch if you're in tmux.
-if [[ -z "$TMUX" ]]; then
-  tmux attach -t "$session_name"
-else
-  tmux switch-client -t "$session_name"
-fi
-# -----
+[[ -f ~/.zsh/aliases.zsh ]] && source ~/.zsh/tmux.zsh
 
 # fzf plugin
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Vault settings
-#export VAULT_ADDR="https://vault.mydomain.ru:8200"
-#export VAULT_CACERT=/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+[[ -f ~/.zsh/aliases.zsh ]] && source ~/.zsh/vault.zsh
 
 # Aliases section
-# git
-alias gp="git pull"
-alias gf="git fetch"
-alias gs="git status"
-alias gadd="git add ."
-alias gd="git diff"
-alias gbr="git branch -r"
-alias gbd="git branch --delete $1"
-alias gsm="git switch master"
-alias glf="git log -p -- $1"
-alias gch="git checkout $1"
-# grep
-alias grep='grep --color'
-# Exa - replacing for ls
-alias ll='eza --icons --group-directories-first -l'
-# Font test
-alias testfont='echo "\ue0b0 \u00b1 \ue0a0 \u27a6 \u2718 \u26a1 \u2699 \u2687"'
-# bat - replacing for cat
-alias cat="batcat"
-#export BAT_THEME="default"
-#source ~/.zfunc/bat.zsh
+[[ -f ~/.zsh/aliases.zsh ]] && source ~/.zsh/aliases.zsh
 
 # Brew package manager
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
