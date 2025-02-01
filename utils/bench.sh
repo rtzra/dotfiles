@@ -74,7 +74,6 @@ speed_test() {
 }
 
 speed() {
-#    speed_test '' 'Speedtest.net'
 #    speed_test '21541' 'Los Angeles, US'
 #    speed_test '43860' 'Dallas, US'
 #    speed_test '40879' 'Montreal, CA'
